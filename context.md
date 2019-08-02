@@ -110,7 +110,7 @@ t.Run("tells store to cancel work if request is cancelled", func(t *testing.T) {
   })
 ```
 
-From the google blog again
+From the [Go Blog: Context](https://blog.golang.org/context)
 
 > The context package provides functions to derive new Context values from existing ones. These values form a tree: when a Context is canceled, all Contexts derived from it are also canceled.
 
@@ -267,7 +267,7 @@ One of the main points of `context` is that it is a consistent way of offering c
 
 > Incoming requests to a server should create a Context, and outgoing calls to servers should accept a Context. The chain of function calls between them must propagate the Context, optionally replacing it with a derived Context created using WithCancel, WithDeadline, WithTimeout, or WithValue. When a Context is canceled, all Contexts derived from it are also canceled.
 
-From the Google blog again:
+From the [Go Blog: Context](https://blog.golang.org/context) again:
 
 > At Google, we require that Go programmers pass a Context parameter as the first argument to every function on the call path between incoming and outgoing requests. This allows Go code developed by many different teams to interoperate well. It provides simple control over timeouts and cancelation and ensures that critical values like security credentials transit Go programs properly.
 
@@ -340,8 +340,6 @@ Finally the code uses another `select` to wait for that goroutine to finish its 
 It's similar to our approach from before, we use Go's concurrency primitives to make two asynchronous processes race each other to determine what we return. 
 
 You'll take a similar approach when writing your own functions and methods that accept a `context` so make sure you understand what's going on.
-
-We removed the reference to `ctx` from the `SpyStore`'s fields because it's no longer interesting to us. We're strictly testing behaviour now which we prefer over testing implementation details such as "you passed through a particular value to function `foo`".
 
 Finally we can update our tests. Comment out our cancellation test so we can fix the happy path test first.
 
